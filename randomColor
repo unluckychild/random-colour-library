@@ -1,0 +1,88 @@
+<?php
+
+$my=new GetColor();
+$my->addColor("new color");
+foreach ($my->getRandomColor(3) as $z){
+//    echo "$z";
+    echo "<div style='background:$z;width:100px;height:100px;'  ></div>";
+    }
+
+
+class GetColor{
+    
+    public $colour_list=array(
+      "black", "white", "gray","antiquewhite","silver","darkslategray","darksalmon","khaki","moccasin","peachpuff","tan",
+      "green","lime","chartreuse","darkgreen","darkolivegreen","lawngreen","lightseagreen","mediumseagreen","mediumspringgreen","olivedrab","palegreen","springgreen",
+      "red","crimson","darkred","firebrick","indianred","mediumvioletred","palevioletred",
+      "brown","maroon","bisque","beige","burlywood","chocolate","peru","rosybrown","saddlebrown","sandybrown","sienna",
+      "purple","darkmagenta","darkorchid","darkviolet","indigo","magenta","mediumorchid","mediumpurple","mediumvioletred","orchid","plum","slateblue",
+      "pink","fuchsia","deeppink","hotpink","violet",
+      "yellow","olive","darkgoldenrod","gold","goldenrod","greenyellow","palegoldenrod","yellowgreen",
+      "blue","navy","teal","aqua","aliceblue","aquamarine","blueviolet","cadetblue","cornflowerblue","cyan","darkblue","darkcyan","darkslateblue","darkturquoise","deepskyblue","dodgerblue","lightblue","mediumturquoise","midnightblue","royalblue","steelblue",
+      "orange","coral","darkorange","orangered","salmon","tomato"
+    
+    );
+
+    public $diff_colours = array(
+      array("red","crimson","darkred","firebrick","indianred","mediumvioletred","palevioletred"),
+      array("black", "white", "gray","antiquewhite","silver","darkslategray","darksalmon","khaki","moccasin","peachpuff","tan"),
+      array("green","lime","chartreuse","darkgreen","darkolivegreen","lawngreen","lightseagreen","mediumseagreen","mediumspringgreen","olivedrab","palegreen","springgreen"),
+      array("brown","maroon","bisque","beige","burlywood","chocolate","peru","rosybrown","saddlebrown","sandybrown","sienna"),
+      array("purple","darkmagenta","darkorchid","darkviolet","indigo","magenta","mediumorchid","mediumpurple","mediumvioletred","orchid","plum","slateblue"),
+      array("pink","fuchsia","deeppink","hotpink","violet"),
+      array("yellow","olive","darkgoldenrod","gold","goldenrod","greenyellow","palegoldenrod","yellowgreen"),
+      array("blue","navy","teal","aqua","aliceblue","aquamarine","blueviolet","cadetblue","cornflowerblue","cyan","darkblue","darkcyan","darkslateblue","darkturquoise","deepskyblue","dodgerblue","lightblue","mediumturquoise","midnightblue","royalblue","steelblue"),
+      array("orange","coral","darkorange","orangered","salmon","tomato")
+    );
+        
+    public function getRandomColor($number,$oneType=false, $repeatColor=false){
+        
+        $colours=array();
+        
+               
+        if($oneType==false){
+       
+          if($repeatColor==false){
+          
+              shuffle($this->colour_list);
+              for($i=0;$i<$number;$i++){
+                  $colours[$i]=$this->colour_list[$i];                
+              }
+                          
+          }else{
+  
+              $total=count($this->colour_list);
+              for($i=0;$i<$number;$i++){
+                  $random=rand(0, ($total-1) );
+                  $colours[$i]=$this->colour_list[$random];                
+              }
+          
+          }
+        }else{
+            $rand=rand(0,8);
+            $total=count($this->diff_colours[$rand]);                        
+            shuffle($this->diff_colours[$rand]);
+            
+            if($repeatColor==false){
+              for($i=0;$i<$number;$i++){
+                  $colours[$i]=$this->diff_colours[$rand][$i];                
+              }                   
+            }else{
+              for($i=0;$i<$number;$i++){
+                  $random=rand(0, ($total-1) );
+                  $colours[$i]=$this->diff_colours[$rand][$random];                
+              }                 
+            }                 
+            
+            
+        }
+                    return $colours;                        
+    }
+    
+    public function addColor($colors){
+        array_push($this->colour_list,$colors);
+    }
+        
+    
+}
+?>
